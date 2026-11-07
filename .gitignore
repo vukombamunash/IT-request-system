@@ -1,0 +1,5 @@
+# Exports stay private: they contain my SharePoint address and email
+*.pbix
+*.msapp
+*.zip
+*.csv
