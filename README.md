@@ -15,12 +15,12 @@ the requester is emailed the outcome, and a Power BI report tracks the workload.
 
 ## Repository contents
 
-| Folder | Contents |
+| Part | Files |
 |---|---|
-| [1-microsoft-list](1-microsoft-list) | Screenshots: all requests; one approved request |
-| [2-power-apps](2-power-apps) | Screenshots: browse screen; new request form |
-| [3-power-automate](3-power-automate) | Screenshots: flow design; run history; approved run; approval email |
-| [4-power-bi](4-power-bi) | `dax-measures.dax`; screenshots: measures, dashboard, filtered dashboard |
+| Microsoft List | `01-list-all-requests.png`, `02-list-item-approved.png` |
+| Power Apps | `01-app-browse.png`, `02-app-new-request.png` |
+| Power Automate | `01-flow-overview.png`, `02-flow-run-history.png`, `03-flow-run-approved.png`, `04-approval-email.png` |
+| Power BI | `dax-measures.dax`, `01-dax-measures.png`, `02-dashboard.png`, `03-dashboard-filtered.png` |
 
 The solution files (.msapp, flow package, .pbix) are kept private because they contain
 my organisation's SharePoint address and account details. The formulas and logic are
@@ -42,7 +42,7 @@ A list called **IT Request** with these columns:
 | Approver comments | Multiple lines of text | Written back by the flow after approval |
 | Resolved Date / Resolution Hours | Date / Number | Used for the resolution-time measure |
 
-![All requests](1-microsoft-list/screenshots/01-list-all-requests.png)
+![All requests](01-list-all-requests.png)
 
 ## 2. Power Apps: the request app
 
@@ -57,8 +57,8 @@ Built from the list (single-screen responsive template) and then adjusted:
 - **System fields are read-only** (Status, Requester, Approver comments, Resolved Date, Resolution Hours): `DisplayMode.View`
 - **Confirmation on save:** `Notify("Request submitted", NotificationType.Success)`
 
-![Browse requests](2-power-apps/screenshots/01-app-browse.png)
-![New request](2-power-apps/screenshots/02-app-new-request.png)
+![Browse requests](01-app-browse.png)
+![New request](02-app-new-request.png)
 
 ## 3. Power Automate: the approval flow
 
@@ -74,12 +74,12 @@ Else (Low / Medium)
     Update item -> Status = New (goes straight to the IT queue)
 ```
 
-![Flow design](3-power-automate/screenshots/01-flow-overview.png)
-![Approved run](3-power-automate/screenshots/03-flow-run-approved.png)
+![Flow design](01-flow-overview.png)
+![Approved run](03-flow-run-approved.png)
 
 ## 4. Power BI: the report
 
-Connected with the SharePoint Online list connector. Measures (see [dax-measures.dax](4-power-bi/dax-measures.dax)):
+Connected with the SharePoint Online list connector. Measures (see [dax-measures.dax](dax-measures.dax)):
 
 ```
 TotalRequests      = COUNTROWS('IT Request')
@@ -96,7 +96,7 @@ HighPriorityShare  = DIVIDE(CALCULATE([TotalRequests], 'IT Request'[Priority] IN
 - 11 of 18 requests were open but only 1 was awaiting approval, which would point to IT capacity, not approvals, as the bottleneck.
 - None of the 3 Critical requests had been resolved.
 
-![Filtered dashboard](4-power-bi/screenshots/03-dashboard-filtered.png)
+![Filtered dashboard](03-dashboard-filtered.png)
 
 ## Problems I solved
 

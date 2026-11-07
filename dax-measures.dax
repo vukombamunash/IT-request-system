@@ -1,0 +1,7 @@
+// DAX measures for the IT Request report (table: 'IT Request')
+TotalRequests = COUNTROWS('IT Request')
+ResolvedRequests = CALCULATE([TotalRequests], 'IT Request'[Status] = "Resolved")
+OpenRequests = CALCULATE([TotalRequests], NOT 'IT Request'[Status] IN {"Resolved", "Rejected"})
+ResolutionRate = DIVIDE([ResolvedRequests], [TotalRequests])
+AvgResolutionHours = AVERAGE('IT Request'[Resolution Hours])
+HighPriorityShare = DIVIDE(CALCULATE([TotalRequests], 'IT Request'[Priority] IN {"High", "Critical"}), [TotalRequests])
